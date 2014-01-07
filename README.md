@@ -1,0 +1,4 @@
+hosts
+=====
+
+Hitchwiki hospitality network
