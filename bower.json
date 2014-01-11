@@ -1,0 +1,24 @@
+{
+  "name": "HW hosts",
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap": "3",
+    "angular": "1.2.7",
+    "leaflet-dist": "latest",
+    "leaflet.markerclusterer": "latest",
+    "angular-animate": "latest",
+    "angular-route": "latest",
+    "angular-leaflet": "latest",
+    "jquery": "2"
+  },
+  "devDependencies": {},
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "components"
+  ],
+  "resolutions": {
+    "angular": "1.2.7",
+    "leaflet.markerclusterer": "0.4"
+  }
+}
