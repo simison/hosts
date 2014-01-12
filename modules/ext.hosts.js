@@ -161,12 +161,23 @@
 
         // Get all users from the API
         $scope.fetch();
-
-        $scope.hostmapclass = "col-md-12 col-hostmap";
-        $scope.sidebarclass = "hide";
+        
+        $scope.addNewHostsLayer = function() {
+            $scope.layers.overlays.newhosts = {
+                name: 'New Hosts',
+                type: 'group',
+                visible: true,
+            }
+        };
+    
+        $scope.deleteNewHostsLayer = function() {
+            delete this.layers.overlays.newhosts;
+        };
 
         $scope.addhost = function() {
             $log.log("->addhost");
+            
+            $scope.addNewHostsLayer();
 
             $scope.layers.overlays.hosts.visible = false;
 
@@ -194,7 +205,8 @@
             $scope.layers.overlays.hosts.visible = true;
 
             $scope.adding = false;
-
+            
+            $scope.deleteNewHostsLayer();
         };
 
         $scope.cancelhost = function() {
@@ -202,6 +214,8 @@
 
             $scope.adding = false;
             $scope.layers.overlays.hosts.visible = true;
+            
+            $scope.deleteNewHostsLayer();
         }
 
     });
