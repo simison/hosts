@@ -1,4 +1,5 @@
 .angular-leaflet-map {
+    clear: both;
     height: 500px;
     width: 100%;
 }

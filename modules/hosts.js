@@ -1,8 +1,13 @@
 /**
  * Hitchwiki Hosts
  */
-//var APIpath = '../API/';
-var APIpath = 'http://mediawiki/index.php/';
+//var APIpath = '/API/';
+//var APIpath = 'http://mediawiki/index.php/';
+
+var APIpath = 'http://dev.wiki.yt/en/';
+
+alert(APIpath);
+
 
 var HWHosts = angular.module('hostmapapp', [
         'leaflet-directive'
@@ -107,13 +112,12 @@ HWHosts.controller('hostmapController', function($scope, $http, $log, $templateC
     /**
      * Fetch markers from the API
      */
-     //
     $scope.fetch = function() {
         $log.log("->fetch");
         $http({
                 method: 'GET',
-                //url: APIpath + 'hosts.json'
                 cache: true,
+                //url: APIpath + 'hosts.json'
                 url: APIpath + 'Special:Ask/-5B-5BCategory:Hosting-5D-5D-20/-3FLocation/format=json/searchlabel=hosts/prettyprint=yes/offset=0'
             }).
             success(function(data, status, headers, config) {
