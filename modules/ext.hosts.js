@@ -3,6 +3,10 @@
  */
 ( function ( mw, jQuery, angular ) {
 
+    //var APIPath = wgServer + wgScriptPath;
+
+    var APIPath = 'http://dev.wiki.yt/en/';
+
     /**
      * Hitchwiki Hosts
      */
@@ -122,7 +126,7 @@
             $http({
                     method: 'GET',
                     cache: true,
-                    url: wgServer + wgScriptPath + '/Special:Ask/-5B-5BCategory:Hosting-5D-5D-20/-3FLocation/format=json/searchlabel=hosts/prettyprint=yes/offset=0'
+                    url: APIPath + '/Special:Ask/-5B-5BCategory:Hosting-5D-5D-20/-3FLocation/format=json/searchlabel=hosts/prettyprint=yes/offset=0'
                 }).
                 success(function(data, status, headers, config) {
                     // this callback will be called asynchronously
