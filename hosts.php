@@ -27,10 +27,10 @@ $wgExtensionCredits['other'][] = array(
 $dir = dirname( __FILE__ );
 
 // Register files
-$wgAutoloadClasses['HostsHooks'] = $dir . '/Hosts.hooks.php';
+$wgAutoloadClasses['HostsHooks'] = $dir . '/hosts.hooks.php';
 $wgAutoloadClasses['SpecialHosts'] = $dir . '/specials/SpecialHosts.php';
-$wgExtensionMessagesFiles['Hosts'] = $dir . '/Hosts.i18n.php';
-$wgExtensionMessagesFiles['HostsAlias'] = $dir . '/Hosts.i18n.alias.php';
+$wgExtensionMessagesFiles['Hosts'] = $dir . '/hosts.i18n.php';
+$wgExtensionMessagesFiles['HostsAlias'] = $dir . '/hosts.i18n.alias.php';
 
 $dir = dirname( __FILE__ ) . '/';
 $wgAutoloadClasses['HostsMapTemplate'] = $dir . 'hosts.template.php';
