@@ -1,7 +1,8 @@
 /**
  * Hitchwiki Hosts
  */
-var APIpath = '../API/';
+//var APIpath = '../API/';
+var APIpath = 'http://mediawiki/index.php/';
 
 var HWHosts = angular.module('hostmapapp', [
         'leaflet-directive'
@@ -51,15 +52,18 @@ HWHosts.factory('Markers', function($http, $log) {
 });
 */
 
+HWHosts.controller('hostmapController', function($scope, $http, $log, $templateCache) {
 
-
-HWHosts.controller('hostmapController', function($scope, $http, $log) { //Markers
+    $scope.user = {
+        id: 1,
+        username: 'Dev'
+    };
 
     angular.extend($scope, {
         hostmap: {
-            lat: 38.71,
-            lng: -9.1470,
-            zoom: 8
+            lat: 51,
+            lng: 9,
+            zoom: 4
         },
         layers: {
             baselayers: {
@@ -103,8 +107,15 @@ HWHosts.controller('hostmapController', function($scope, $http, $log) { //Marker
     /**
      * Fetch markers from the API
      */
+     //
     $scope.fetch = function() {
-        $http({method: 'GET', url: APIpath + 'hosts.json'}).
+        $log.log("->fetch");
+        $http({
+                method: 'GET',
+                //url: APIpath + 'hosts.json'
+                cache: true,
+                url: APIpath + 'Special:Ask/-5B-5BCategory:Hosting-5D-5D-20/-3FLocation/format=json/searchlabel=hosts/prettyprint=yes/offset=0'
+            }).
             success(function(data, status, headers, config) {
                 // this callback will be called asynchronously
                 // when the response is available
@@ -140,15 +151,20 @@ HWHosts.controller('hostmapController', function($scope, $http, $log) { //Marker
 
 
     $scope.addhost = function() {
-                $scope.marker_list.push({
+        $log.log("->addhost");
+
+        var newMarker = {
                     lng : $scope.hostmap.lng,
                     lat : $scope.hostmap.lat,
                     layer : 'hosts',
-                    message: '<p>Please tell us about this place : </p><textarea> </textarea><br /><button class="btn btn-default" type="button">OK</button>',
-                    //draggable: true,
-                    focus:true
-                });
-    }
+                    message: $templateCache.get('addMarkerForm.html'),
+                    draggable: true,
+                    focus: true,
+                    riseOnHover: true
+                };
+
+        $scope.marker_list.push(newMarker);
+    };
 
 
 });
