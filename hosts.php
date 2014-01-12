@@ -24,16 +24,14 @@ $wgExtensionCredits['other'][] = array(
 
 /* Setup */
 
-$dir = dirname( __FILE__ );
+$dir = dirname( __FILE__ ) . '/';
 
 // Register files
-$wgAutoloadClasses['HostsHooks'] = $dir . '/hosts.hooks.php';
-$wgAutoloadClasses['SpecialHosts'] = $dir . '/specials/SpecialHosts.php';
-$wgExtensionMessagesFiles['Hosts'] = $dir . '/hosts.i18n.php';
-$wgExtensionMessagesFiles['HostsAlias'] = $dir . '/hosts.i18n.alias.php';
-
-$dir = dirname( __FILE__ ) . '/';
+$wgAutoloadClasses['HostsHooks'] = $dir . 'hosts.hooks.php';
+$wgAutoloadClasses['SpecialHosts'] = $dir . 'specials/SpecialHosts.php';
 $wgAutoloadClasses['HostsMapTemplate'] = $dir . 'hosts.template.php';
+$wgExtensionMessagesFiles['Hosts'] = $dir . 'hosts.i18n.php';
+$wgExtensionMessagesFiles['HostsAlias'] = $dir . 'hosts.i18n.alias.php';
 
 
 // Register hooks
