@@ -31,33 +31,27 @@
                     </p>
 
                 </div>
-                <div class="col-md-12">
-
+            </div>
+            <div class="row">
+                <div ng-class="hostmapclass">
+                    
                     <leaflet center="hostmap" markers="marker_list" layers="layers"></leaflet>
 
+                </div>
+                <div ng-class="sidebarclass">
+                    <h4>Add Myself</h3>
+                        <textarea ng-model="user.info"></textarea>
+                        <br />
+                        <br />
+                        <button type="button" class="btn btn-default btn-sm" ng-click="savehost()" >Save myself</button>
+                        <button type="button" class="btn btn-default btn-sm" ng-click="cancelhost()" >Cancel</button>
                 </div>
             </div>
         </div>
 
 
         <script type="text/ng-template" id="addMarkerForm.html">
-            <form class="form-horizontal" role="form">
-                <div class="form-group">
-                    <label for="web_bw" class="sr-only">BeWelcome</label>
-                    <input type="text" class="form-control" id="web_bw" placeholder="BeWelcome username">
-                </div>
-                <div class="form-group">
-                    <label for="web_cs" class="sr-only">CouchSurfing</label>
-                    <input type="text" class="form-control" id="web_cs" placeholder="CouchSurfing username">
-                </div>
-                <div class="form-group">
-                    <label for="web_ws" class="sr-only">WarmShowers</label>
-                    <input type="text" class="form-control" id="web_ws" placeholder="WarmShowers username">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default">Add</button>
-                </div>
-            </form>
+            <p>Hey ! Thanks for adding a place in this map. Choose wisely a location.</p>
         </script>
 
 

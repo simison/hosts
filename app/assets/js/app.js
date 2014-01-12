@@ -1,8 +1,8 @@
 /**
  * Hitchwiki Hosts
  */
-//var APIpath = '../API/';
-var APIpath = 'http://mediawiki/index.php/';
+var APIpath = 'API/';
+//var APIpath = 'http://mediawiki/index.php/';
 
 var HWHosts = angular.module('hostmapapp', [
         'leaflet-directive'
@@ -97,6 +97,11 @@ HWHosts.controller('hostmapController', function($scope, $http, $log, $templateC
                     layerOptions: {
                         maxClusterRadius: 20
                     }
+                },    
+                newhosts: {
+                    name: 'New Hosts',
+                    type: 'group',
+                    visible: true,
                 }
             }
         },
@@ -110,11 +115,12 @@ HWHosts.controller('hostmapController', function($scope, $http, $log, $templateC
      //
     $scope.fetch = function() {
         $log.log("->fetch");
+        $log.log(APIpath + 'hosts.json');
         $http({
                 method: 'GET',
-                //url: APIpath + 'hosts.json'
-                cache: true,
-                url: APIpath + 'Special:Ask/-5B-5BCategory:Hosting-5D-5D-20/-3FLocation/format=json/searchlabel=hosts/prettyprint=yes/offset=0'
+                url: APIpath + 'hosts.json',
+                cache: true
+                //url: APIpath + 'Special:Ask/-5B-5BCategory:Hosting-5D-5D-20/-3FLocation/format=json/searchlabel=hosts/prettyprint=yes/offset=0'
             }).
             success(function(data, status, headers, config) {
                 // this callback will be called asynchronously
@@ -148,23 +154,46 @@ HWHosts.controller('hostmapController', function($scope, $http, $log, $templateC
     };
 
     $scope.fetch();
-
+    $scope.hostmapclass = "col-md-12 col-hostmap";
+    $scope.sidebarclass = "hide";
 
     $scope.addhost = function() {
         $log.log("->addhost");
-
+        
+        $scope.layers.overlays.hosts.visible = false;
+        
         var newMarker = {
                     lng : $scope.hostmap.lng,
                     lat : $scope.hostmap.lat,
-                    layer : 'hosts',
+                    layer : 'newhosts',
                     message: $templateCache.get('addMarkerForm.html'),
                     draggable: true,
                     focus: true,
                     riseOnHover: true
-                };
+        };
 
         $scope.marker_list.push(newMarker);
-    };
+        $scope.hostmapclass = "col-md-10 col-hostmap";
+        $scope.sidebarclass = "col-md-2 sidebar-info";
 
+    };
+    
+    $scope.savehost = function() {
+        $scope.marker_list[$scope.marker_list.length-1].layer = 'hosts';
+        $scope.marker_list[$scope.marker_list.length-1].draggable = 'false'; 
+        $scope.marker_list[$scope.marker_list.length-1].message = $scope.user.info;
+        
+        $scope.layers.overlays.hosts.visible = true;
+        
+        $scope.hostmapclass = "col-md-12 col-hostmap";
+        $scope.sidebarclass = "hide";
+    };
+    
+    $scope.cancelhost = function() {
+        $scope.marker_list.pop();
+        $scope.hostmapclass = "col-md-12 col-hostmap";
+        $scope.sidebarclass = "hide";
+        $scope.layers.overlays.hosts.visible = true;
+    }
 
 });

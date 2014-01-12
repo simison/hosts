@@ -2,3 +2,17 @@
     height: 500px;
     width: 100%;
 }
+
+.sidebar-info {
+    border:1px solid #cbcbcb;
+    height:500px;
+    padding: 10px;
+}
+
+.col-hostmap {
+    padding: 0px;
+}
+
+textarea {
+    width:100%;
+}
