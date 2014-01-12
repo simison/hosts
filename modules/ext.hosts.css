@@ -1,5 +1,31 @@
-.angular-leaflet-map {
+#HWHostmap .angular-leaflet-map {
     clear: both;
     height: 500px;
     width: 100%;
+}
+
+#HWHostmap .sidebar-info {
+    border:1px solid #cbcbcb;
+    height:500px;
+    padding: 10px;
+}
+
+#HWHostmap.adding-marker-false .angular-leaflet-map {
+    width: 100%;
+}
+
+#HWHostmap.adding-marker-true .angular-leaflet-map {
+    width: 80%;
+}
+
+#HWHostmap.adding-marker-true .sidebar-info {
+    width: 20%;
+}
+
+#HWHostmap .col-hostmap {
+    padding: 0px;
+}
+
+#HWHostmap textarea {
+    width:100%;
 }

@@ -60,8 +60,10 @@
             username: (mw.user.name()) ? mw.user.name() : false
         };
 
-        //$scope.wgEnableAPI = mw.config.wgEnableAPI;
-        //$scope.wgEnableWriteAPI = mw.config.wgEnableWriteAPI;
+        $scope.adding = false;
+
+        $scope.wgEnableAPI = wgEnableAPI;
+        $scope.wgEnableWriteAPI = wgEnableWriteAPI;
 
 
         angular.extend($scope, {
@@ -119,7 +121,6 @@
             $log.log(wgServer + wgScriptPath);
             $http({
                     method: 'GET',
-                    //url: APIpath + 'hosts.json'
                     cache: true,
                     url: wgServer + wgScriptPath + 'Special:Ask/-5B-5BCategory:Hosting-5D-5D-20/-3FLocation/format=json/searchlabel=hosts/prettyprint=yes/offset=0'
                 }).
@@ -154,23 +155,50 @@
                 });
         };
 
+        // Get all users from the API
         $scope.fetch();
+
+        $scope.hostmapclass = "col-md-12 col-hostmap";
+        $scope.sidebarclass = "hide";
 
         $scope.addhost = function() {
             $log.log("->addhost");
 
+            $scope.layers.overlays.hosts.visible = false;
+
             var newMarker = {
                         lng : $scope.hostmap.lng,
                         lat : $scope.hostmap.lat,
-                        layer : 'hosts',
+                        layer : 'newhosts',
                         message: $templateCache.get('addMarkerForm.html'),
                         draggable: true,
                         focus: true,
                         riseOnHover: true
-                    };
+            };
 
             $scope.marker_list.push(newMarker);
+
+            $scope.adding = true;
+
         };
+
+        $scope.savehost = function() {
+            $scope.marker_list[$scope.marker_list.length-1].layer = 'hosts';
+            $scope.marker_list[$scope.marker_list.length-1].draggable = 'false';
+            $scope.marker_list[$scope.marker_list.length-1].message = $scope.user.info;
+
+            $scope.layers.overlays.hosts.visible = true;
+
+            $scope.adding = false;
+
+        };
+
+        $scope.cancelhost = function() {
+            $scope.marker_list.pop();
+
+            $scope.adding = false;
+            $scope.layers.overlays.hosts.visible = true;
+        }
 
     });
 

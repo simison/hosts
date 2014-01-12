@@ -20,41 +20,37 @@ class HostsMapTemplate extends QuickTemplate {
         public function execute() {
     ?>
     <div ng-app="hostmapapp">
-    <div id="hostmap-wrapper" ng-controller="hostmapController">
+        <div id="HWHostmap" ng-controller="hostmapController" class="adding-marker-{{adding}}">
 
-    <input type="text" placeholder="user.id" ng-model="user.id">
-<br><input type="text" placeholder="user.username" ng-model="user.username">
-<br><input type="text" placeholder="wgEnableAPI" ng-model="wgEnableAPI">
-<br><input type="text" placeholder="wgEnableWriteAPI" ng-model="wgEnableWriteAPI">
+            <input type="text" placeholder="user.id" ng-model="user.id">
+            <br><input type="text" placeholder="user.username" ng-model="user.username">
+            <br><input type="text" placeholder="wgEnableAPI" ng-model="wgEnableAPI">
+            <br><input type="text" placeholder="wgEnableWriteAPI" ng-model="wgEnableWriteAPI">
 
-        <div id="hostmap-toolbar" class="form-inline">
-            <button type="button" class="btn btn-default" ng-click="addhost()" >Add myself</button>
-            <a href="<?php echo $this->data['HostsMapTemplate']->getTitle()->escapeFullURL() ?>" class="btn btn-default">Reload</a>
+            <div id="hostmap-toolbar" class="form-inline">
+                <button type="button" class="btn btn-default" ng-click="addhost()" >Add myself</button>
+                <a href="<?php echo $this->data['HostsMapTemplate']->getTitle()->escapeFullURL() ?>" class="btn btn-default">Reload</a>
+            </div>
+
+            <div ng-class="hostmapclass">
+
+                <leaflet center="hostmap" markers="marker_list" layers="layers"></leaflet>
+
+            </div>
+            <div ng-class="sidebarclass" ng-show="adding">
+                <h4>Add Myself</h3>
+                <textarea ng-model="user.info"></textarea>
+                <br />
+                <br />
+                <button type="button" class="btn btn-default btn-sm" ng-click="savehost()" >Save myself</button>
+                <button type="button" class="btn btn-default btn-sm" ng-click="cancelhost()" >Cancel</button>
+            </div>
+
+            <script type="text/ng-template" id="addMarkerForm.html">
+                <p>Hey ! Thanks for adding a place in this map. Choose wisely a location.</p>
+            </script>
+
         </div>
-
-        <leaflet center="hostmap" markers="marker_list" layers="layers"></leaflet>
-
-        <script type="text/ng-template" id="addMarkerForm.html">
-            <form class="form-horizontal" role="form" style="width: 500px;">
-                <div class="form-group">
-                    <label for="web_bw" class="sr-only">BeWelcome</label>
-                    <input type="text" class="form-control" id="web_bw" placeholder="BeWelcome username">
-                </div>
-                <div class="form-group">
-                    <label for="web_cs" class="sr-only">CouchSurfing</label>
-                    <input type="text" class="form-control" id="web_cs" placeholder="CouchSurfing username">
-                </div>
-                <div class="form-group">
-                    <label for="web_ws" class="sr-only">WarmShowers</label>
-                    <input type="text" class="form-control" id="web_ws" placeholder="WarmShowers username">
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default">Add</button>
-                </div>
-            </form>
-        </script>
-
-    </div>
     </div>
     <?php
 
