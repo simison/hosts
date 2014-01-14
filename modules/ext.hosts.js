@@ -5,7 +5,7 @@
 
     //var APIPath = wgServer + wgScriptPath;
 
-    var APIPath = 'http://dev.wiki.yt/en/';
+    var APIPath = 'http://dev.wiki.yt/en';
 
     /**
      * Hitchwiki Hosts
@@ -58,9 +58,10 @@
     */
 
     HWHosts.controller('hostmapController', function($scope, $http, $log, $templateCache) {
-
+        
+        
         $scope.user = {
-            id: (mw.user.getId()) ? mw.user.getId() : false,
+            id: (mw.user.id()) ? mw.user.id() : false,
             username: (mw.user.name()) ? mw.user.name() : false
         };
 
@@ -126,8 +127,8 @@
             $http({
                     method: 'GET',
                     cache: true,
-                    url: APIPath + '/Special:Ask/-5B-5BCategory:Hosting-5D-5D-20/-3FLocation/format=json/searchlabel=hosts/prettyprint=yes/offset=0'
-                }).
+                    url: APIPath + '/Special:Ask/-5B-5BCategory:Hosting-5D-5D-20/-3FLocation/-3FHostingDescription/-3FCouchSurfing/-3FBeWelcome/-3FWarmShowers/format=json/searchlabel=hosts/prettyprint=yes/offset=0'
+            }).
                 success(function(data, status, headers, config) {
                     // this callback will be called asynchronously
                     // when the response is available
@@ -136,12 +137,20 @@
                     if(data.results) {
 
                         angular.forEach(data.results, function(place) {
-
+                            
+                            var user = '<h5><a href="' + place.fullurl + '" target="_blank">' + place.fulltext.replace(/User:/g , "") + '</a></h5>';
+                            var description = place.printouts.HostingDescription ? place.printouts.HostingDescription[0] + "<br/>" : "";
+                            var bewelcome = place.printouts.BeWelcome[0] ? "<a href=http://bewelcome.org/members/" + place.printouts.BeWelcome[0].fulltext + ' target="_blank">BeWelcome</a><br/>' : "";
+                            var couchsurfing = place.printouts.CouchSurfing[0] ? "<a href=https://couchsurfing.org/people/" + place.printouts.CouchSurfing[0].fulltext +' target="_blank">CouchSurfing</a><br/>' : "";
+                            var warmshowers = place.printouts.WarmShowers[0] ? "<a href=https://warmshowers.org/users/" + place.printouts.WarmShowers[0].fulltext + ' target="_blank">WarmShowers</a><br/>' : "";
+                            
+                            $log.log(description);
+                                                            
                             $scope.marker_list.push({
                                 lat:        place.printouts.Location[0].lat,
                                 lng:        place.printouts.Location[0].lon,
                                 layer:      'hosts',
-                                message:    '<p><a href="' + place.fullurl + '" target="_blank">' + place.fulltext + '</a></p>',
+                                message:   user + description + bewelcome + couchsurfing + warmshowers,
                                 focus:      true
                             });
 
@@ -201,6 +210,8 @@
             $scope.marker_list[$scope.marker_list.length-1].layer = 'hosts';
             $scope.marker_list[$scope.marker_list.length-1].draggable = 'false';
             $scope.marker_list[$scope.marker_list.length-1].message = $scope.user.info;
+            
+            $scope.posthost();
 
             $scope.layers.overlays.hosts.visible = true;
 
@@ -216,6 +227,13 @@
             $scope.layers.overlays.hosts.visible = true;
             
             $scope.deleteNewHostsLayer();
+        }
+        
+        $scope.posthost = function () {
+            var data = 'Hosting[Location]=' + $scope.hostmap.lng + ',+' + $scope.hostmap.lat + '&Hosting[HostingDescription]=' + $scope.user.info + '&wpSave=true';         
+            $log.log(data);            
+console.log( APIPath + '/w/index.php?title=User:' + $scope.user.username + '&action=formedit' );
+            $http.post( APIPath + '/w/index.php?title=User:' + $scope.user.username + '&action=formedit', data);
         }
 
     });
