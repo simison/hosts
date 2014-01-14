@@ -19,30 +19,42 @@ class SpecialHosts extends SpecialPage {
 	 *  [[Special:HostsMap/subpage]].
 	 */
 	public function execute( $sub ) {
-		$out = $this->getOutput();
 
-        //$out->setRobotpolicy( 'noindex,nofollow' );
+        // Check if user can edit pages (and is thus allowed to see the map)
+        global $wgUser;
+        if( $wgUser->isAllowed('edit') ) {
 
-        $out->setArticleRelated( false );
+            print_r($wgUser);
 
-		$out->setPageTitle( $this->msg( 'hosts-title' ) );
+		    $out = $this->getOutput();
 
-        // CSS/JS
-        //$out->addInlineScript();
-        $out->addModules( 'ext.hosts' );
+            //$out->setRobotpolicy( 'noindex,nofollow' );
 
-        // Begin actual template stuff
-        $template = new HostsMapTemplate();
+            $out->setArticleRelated( false );
 
-        // $this is SpecialMySpecialPage object
-        $template->setRef( 'HostsMapTemplate', $this );
+		    $out->setPageTitle( $this->msg( 'hosts-title' ) );
 
-        // In the template class, all the variables we define here can be
-        // accessed by using $this->data['variable_name']
-        // $template->set( 'keyname', 'value' );
+            // CSS/JS
+            //$out->addInlineScript();
+            $out->addModules( 'ext.hosts' );
 
-        // et voilà!
-        $out->addTemplate( $template );
+            // Begin actual template stuff
+            $template = new HostsMapTemplate();
+
+            // $this is SpecialMySpecialPage object
+            $template->setRef( 'HostsMapTemplate', $this );
+
+            // In the template class, all the variables we define here can be
+            // accessed by using $this->data['variable_name']
+            // $template->set( 'keyname', 'value' );
+
+            // et voilà!
+            $out->addTemplate( $template );
+
+        }
+        else {
+            $this->displayRestrictionError();
+        }
 
 	}
 
