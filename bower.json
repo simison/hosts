@@ -1,9 +1,9 @@
 {
-  "name": "HW hosts",
+  "name": "HW Hosts",
   "version": "1.0.0",
   "dependencies": {
     "bootstrap": "3",
-    "angular": "1.2.7",
+    "angular": "1.2.8",
     "leaflet-dist": "latest",
     "leaflet.markerclusterer": "latest",
     "angular-animate": "latest",
@@ -18,7 +18,7 @@
     "components"
   ],
   "resolutions": {
-    "angular": "1.2.7",
+    "angular": "1.2.8",
     "leaflet.markerclusterer": "0.4"
   }
 }
