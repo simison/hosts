@@ -38,7 +38,7 @@ class HostsMapTemplate extends QuickTemplate {
 
             <div ng-class="hostmapclass">
 
-                <leaflet center="hostmap" markers="marker_list" layers="layers"></leaflet>
+                <leaflet center="hostmap" markers="marker_list" layers="layers" bounds="bounds"></leaflet>
 
             </div>
             <div ng-class="sidebarclass" ng-show="adding">
