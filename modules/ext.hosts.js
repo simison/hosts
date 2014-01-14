@@ -235,7 +235,24 @@
 console.log( APIPath + '/w/index.php?title=User:' + $scope.user.username + '&action=formedit' );
             $http.post( APIPath + '/w/index.php?title=User:' + $scope.user.username + '&action=formedit', data);
         }
+         $log.log($scope.hostmap);
+        $scope.searchaddress = function () {
+            
+            $http.get('http://nominatim.openstreetmap.org/search?q=' + $scope.address.search.replace(/ /g , '+') + '&format=json&limit=1&email=contact@hitchwiki.org') .success(function(data) {
+                if(data[0]) {
 
+                    var lon = parseFloat(data[0].lon);
+                    var lat = parseFloat(data[0].lat);
+
+                    $scope.hostmap.lng = lon;
+                    $scope.hostmap.lat = lat;
+                    $scope.hostmap.zoom = 10;
+
+
+                }
+            });
+        }
+                                                                                                                                         
     });
 
 }( mediaWiki, jQuery, angular ) );
