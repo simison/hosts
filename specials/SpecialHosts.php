@@ -24,8 +24,6 @@ class SpecialHosts extends SpecialPage {
         global $wgUser;
         if( $wgUser->isAllowed('edit') ) {
 
-            print_r($wgUser);
-
 		    $out = $this->getOutput();
 
             //$out->setRobotpolicy( 'noindex,nofollow' );
