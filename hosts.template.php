@@ -22,7 +22,7 @@ class HostsMapTemplate extends QuickTemplate {
     <div ng-app="hostmapapp">
         <div id="HWHostmap" ng-controller="hostmapController" class="adding-marker-{{adding}}">
             
-            <input type="search" placeholder="Search for an address" ng-model="address.search" ng-change="searchaddress()">
+            <input type="search" placeholder="Search for an address" ng-model="address.search" ng-change="searchtimeout()">
             <br />
             <br />
 

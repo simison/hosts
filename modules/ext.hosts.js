@@ -59,7 +59,7 @@
     });
     */
 
-    HWHosts.controller('hostmapController', function($scope, $http, $log, $templateCache) {
+    HWHosts.controller('hostmapController', function($scope, $http, $log, $templateCache, $timeout) {
 
 
         $scope.user = {
@@ -250,7 +250,14 @@
 
                 });
         }
-         $log.log($scope.hostmap);
+        
+        $log.log($scope.hostmap);
+        var timeout;
+        $scope.searchtimeout = function () {
+            if(timeout) $timeout.cancel();
+            timeout = $timeout($scope.searchaddress, 1000);
+        }
+        
         $scope.searchaddress = function () {
             
             $http.get('http://nominatim.openstreetmap.org/search?q=' + $scope.address.search.replace(/ /g , '+') + '&format=json&limit=1&email=contact@hitchwiki.org') .success(function(data) {
