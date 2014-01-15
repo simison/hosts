@@ -22,9 +22,11 @@ class HostsMapTemplate extends QuickTemplate {
     <div ng-app="hostmapapp" ng-controller="hostmapController">
         <div id="HWHostmap" class="sidebar-{{adding}}">
 
-            <div id="hostmap-toolbar" class="leaflet-control-layers leaflet-control">
-                <input type="search" id="hostmap-search" class="form-control" placeholder="Search..." ng-model="address.search" ng-change="searchtimeout()">
-                <button type="button" ng-hide="adding" id="hostmap-add" class="btn btn-default" ng-click="addhost()" >Add yourself</button>
+            <div id="hostmap-toolbar">
+                <input type="search" id="hostmap-search" placeholder="Search..." ng-model="address.search" ng-change="searchtimeout()">
+                <div class="hostmap-add-wrap">
+                    <button type="button" ng-hide="adding" id="hostmap-add" class="btn btn-default" ng-click="addhost()" >Add yourself</button>
+                </div>
             </div>
 
             <div ng-class="hostmapclass">
