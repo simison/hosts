@@ -76,18 +76,16 @@
         angular.extend($scope, {
             bounds: {
                 southWest: {
-                    //lat:51.508742458803326,
-                    //lng: -0.087890625,
+                    lat:-35,
+                    lng: -35
                 },
                 northEast: {
-                    //lat:51.508742458803326,
-                    //lng:-0.087890625,
+                    lat:35,
+                    lng:35
                 }
             },
             hostmap: {
-                //lat: 51,
-                //lng: 9,
-                //zoom: 4
+                autoDiscover: true,
             },
             layers: {
                 baselayers: {
@@ -261,6 +259,7 @@
                 });
         }
         
+        //Timeout for search input
         $log.log($scope.hostmap);
         var timeout;
         $scope.searchtimeout = function () {
@@ -271,7 +270,7 @@
         $scope.searchaddress = function () {
             
             $http.get('http://nominatim.openstreetmap.org/search?q=' + $scope.address.search.replace(/ /g , '+') + '&format=json&limit=1&email=contact@hitchwiki.org') .success(function(data) {
-                if(data[0]) {
+                if(data[0] && parseFloat(data[0].importance) > 0.5 ) {
                                         
                     var lon = parseFloat(data[0].lon);
                     var lat = parseFloat(data[0].lat);                    
@@ -279,9 +278,7 @@
                     $scope.bounds.southWest.lat = parseFloat(data[0].boundingbox[0]);
                     $scope.bounds.northEast.lat = parseFloat(data[0].boundingbox[1]);
                     $scope.bounds.southWest.lng = parseFloat(data[0].boundingbox[2]);
-                    $scope.bounds.northEast.lng = parseFloat(data[0].boundingbox[3]);
-                    
-
+                    $scope.bounds.northEast.lng = parseFloat(data[0].boundingbox[3]); 
                 }
             });
         }
