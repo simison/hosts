@@ -1,13 +1,15 @@
 /**
  * JavaScript for Map in Hosts.
  */
-( function ( mw, jQuery, angular ) {
+( function ( mw, $, angular ) {
 
     //var APIPath = wgServer + wgScriptPath;
 
     var APIPath = 'http://dev.wiki.yt/en';
 
     //var APIPath = 'http://mediawiki.localhost/debug.php?debug=';
+
+    var app_email = 'contact@hitchwiki.org';
 
     /**
      * Hitchwiki Hosts
@@ -61,7 +63,6 @@
 
     HWHosts.controller('hostmapController', function($scope, $http, $log, $templateCache, $timeout) {
 
-
         $scope.user = {
             id: (mw.user.id()) ? mw.user.id() : false,
             username: (mw.user.name()) ? mw.user.name() : false
@@ -69,8 +70,8 @@
 
         $scope.adding = false;
 
-        $scope.wgEnableAPI = wgEnableAPI;
-        $scope.wgEnableWriteAPI = wgEnableWriteAPI;
+        //$scope.wgEnableAPI = wgEnableAPI;
+        //$scope.wgEnableWriteAPI = wgEnableWriteAPI;
 
 
         angular.extend($scope, {
@@ -258,31 +259,72 @@
 
                 });
         }
-        
-        //Timeout for search input
-        $log.log($scope.hostmap);
-        var timeout;
+
+        var searchTimeout;
         $scope.searchtimeout = function () {
-            if(timeout) $timeout.cancel();
-            timeout = $timeout($scope.searchaddress, 1000);
+
+            if(searchTimeout) searchTimeout = false;
+
+            searchTimeout = $timeout($scope.searchaddress, 1000);
         }
-        
+
         $scope.searchaddress = function () {
-            
-            $http.get('http://nominatim.openstreetmap.org/search?q=' + $scope.address.search.replace(/ /g , '+') + '&format=json&limit=1&email=contact@hitchwiki.org') .success(function(data) {
-                if(data[0] && parseFloat(data[0].importance) > 0.5 ) {
-                                        
-                    var lon = parseFloat(data[0].lon);
-                    var lat = parseFloat(data[0].lat);                    
-                   
-                    $scope.bounds.southWest.lat = parseFloat(data[0].boundingbox[0]);
-                    $scope.bounds.northEast.lat = parseFloat(data[0].boundingbox[1]);
-                    $scope.bounds.southWest.lng = parseFloat(data[0].boundingbox[2]);
-                    $scope.bounds.northEast.lng = parseFloat(data[0].boundingbox[3]); 
-                }
-            });
+            searchTimeout = false;
+
+            $http
+            .get('http://nominatim.openstreetmap.org/search?q=' + $scope.address.search.replace(/ /g , '+') + '&format=json&limit=1&email=' + app_email)
+                .success(function(data) {
+                    if(data[0] && parseFloat(data[0].importance) > 0.5 ) {
+
+                        var lon = parseFloat(data[0].lon);
+                        var lat = parseFloat(data[0].lat);
+
+                        $scope.bounds.southWest.lat = parseFloat(data[0].boundingbox[0]);
+                        $scope.bounds.northEast.lat = parseFloat(data[0].boundingbox[1]);
+                        $scope.bounds.southWest.lng = parseFloat(data[0].boundingbox[2]);
+                        $scope.bounds.northEast.lng = parseFloat(data[0].boundingbox[3]);
+                    }
+                });
         }
-                                                                                                                                         
+
     });
+
+
+    /**
+     * Search suggestions
+     */
+    $("#hostmap-search")
+        .typeahead([{
+            name: 'hostmap-suggestions',
+            remote: {
+                url: 'http://nominatim.openstreetmap.org/search?q=%QUERY&format=json&limit=10&email=' + app_email,
+                filter: function(data){
+                    /*
+                    [{
+                        "place_id": "6359516",
+                        "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. http:\/\/www.openstreetmap.org\/copyright",
+                        "osm_type": "node",
+                        "osm_id": "656406864",
+                        "boundingbox": ["46.0852317810059", "46.0852355957031", "10.9915504455566", "10.991551399231"],
+                        "lat": "46.0852324",
+                        "lon": "10.9915508",
+                        "display_name": "Lon, TN, Trentino-Alto Adige\/S\u00fcdtirol, Italy",
+                        "class": "place",
+                        "type": "village",
+                        "importance": 0.375,
+                        "icon": "http:\/\/nominatim.openstreetmap.org\/images\/mapicons\/poi_place_village.p.20.png"
+                    }
+                    */
+                    var results = [];
+
+                    angular.forEach(data, function(value, key){
+                        this.push(value.display_name);
+                    }, results)
+
+                   return results;
+                }
+            }
+        }])
+        .on('typeahead:selected', $scope.searchaddress);
 
 }( mediaWiki, jQuery, angular ) );

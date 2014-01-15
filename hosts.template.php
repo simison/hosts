@@ -19,21 +19,14 @@ class HostsMapTemplate extends QuickTemplate {
          */
         public function execute() {
     ?>
-    <div ng-app="hostmapapp">
-        <div id="HWHostmap" ng-controller="hostmapController" class="adding-marker-{{adding}}">
-            
-            <input type="search" placeholder="Search for an address" ng-model="address.search" ng-change="searchtimeout()">
-            <br />
-            <br />
+    <div ng-app="hostmapapp" ng-controller="hostmapController">
+        <div id="HWHostmap" class="sidebar-{{adding}}">
 
-            <input type="text" placeholder="user.id" ng-model="user.id">
-            <br><input type="text" placeholder="user.username" ng-model="user.username">
-            <br><input type="text" placeholder="wgEnableAPI" ng-model="wgEnableAPI">
-            <br><input type="text" placeholder="wgEnableWriteAPI" ng-model="wgEnableWriteAPI">
-
-            <div id="hostmap-toolbar" class="form-inline">
-                <button type="button" class="btn btn-default" ng-click="addhost()" >Add myself</button>
-                <a href="<?php echo $this->data['HostsMapTemplate']->getTitle()->escapeFullURL() ?>" class="btn btn-default">Reload</a>
+            <div id="hostmap-toolbar">
+                <input type="search" id="hostmap-search" placeholder="Search..." ng-model="address.search" ng-change="searchtimeout()">
+                <div class="hostmap-add-wrap">
+                    <button type="button" ng-hide="adding" id="hostmap-add" class="btn btn-default" ng-click="addhost()" >Add yourself</button>
+                </div>
             </div>
 
             <div ng-class="hostmapclass">
@@ -41,13 +34,13 @@ class HostsMapTemplate extends QuickTemplate {
                 <leaflet center="hostmap" markers="marker_list" layers="layers" bounds="bounds"></leaflet>
 
             </div>
-            <div ng-class="sidebarclass" ng-show="adding">
+            <div class="hostmap-sidebar" ng-show="adding">
                 <h4>Add Myself</h3>
                 <textarea ng-model="user.info"></textarea>
                 <br />
                 <br />
-                <button type="button" class="btn btn-default btn-sm" ng-click="savehost()" >Save myself</button>
-                <button type="button" class="btn btn-default btn-sm" ng-click="cancelhost()" >Cancel</button>
+                <button type="button" class="btn btn-primary btn-sm" ng-click="savehost()" >Add</button>
+                <button type="button" class="btn btn-default btn-sm" ng-click="cancelhost()">Cancel</button>
             </div>
 
             <script type="text/ng-template" id="addMarkerForm.html">
@@ -55,6 +48,9 @@ class HostsMapTemplate extends QuickTemplate {
             </script>
 
         </div>
+
+        <input type="text" placeholder="user.id" ng-model="user.id"><br>
+        <input type="text" placeholder="user.username" ng-model="user.username">
     </div>
     <?php
 

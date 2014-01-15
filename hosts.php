@@ -53,6 +53,7 @@ $wgResourceModules['ext.hosts'] = array(
 	   // 'modules/vendor/angular-mocks/angular-mocks.js',
 		'modules/vendor/leaflet-dist/leaflet.js',
 		'modules/vendor/leaflet.markerclusterer/dist/leaflet.markercluster.js',
+		'modules/vendor/typeahead.js/dist/typeahead.min.js',
 		'modules/ext.hosts.js',
 	),
 	'styles' => array(
