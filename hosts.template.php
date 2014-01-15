@@ -23,13 +23,13 @@ class HostsMapTemplate extends QuickTemplate {
         <div id="HWHostmap" class="sidebar-{{adding}}">
 
             <div id="hostmap-toolbar" class="leaflet-control-layers leaflet-control">
-                <input type="search" id="hostmap-search" class="form-control" placeholder="Search..." ng-model="address.search" ng-change="searchaddress()">
+                <input type="search" id="hostmap-search" class="form-control" placeholder="Search..." ng-model="address.search" ng-change="searchtimeout()">
                 <button type="button" ng-hide="adding" id="hostmap-add" class="btn btn-default" ng-click="addhost()" >Add yourself</button>
             </div>
 
             <div ng-class="hostmapclass">
 
-                <leaflet center="hostmap" markers="marker_list" layers="layers"></leaflet>
+                <leaflet center="hostmap" markers="marker_list" layers="layers" bounds="bounds"></leaflet>
 
             </div>
             <div class="hostmap-sidebar" ng-show="adding">
@@ -38,7 +38,7 @@ class HostsMapTemplate extends QuickTemplate {
                 <br />
                 <br />
                 <button type="button" class="btn btn-primary btn-sm" ng-click="savehost()" >Add</button>
-                <button type="button" class="btn btn-default btn-sm" ng-click="cancelhost()" >Cancel</button>
+                <button type="button" class="btn btn-default btn-sm" ng-click="cancelhost()">Cancel</button>
             </div>
 
             <script type="text/ng-template" id="addMarkerForm.html">
