@@ -9,6 +9,7 @@
     "angular-animate": "latest",
     "angular-route": "latest",
     "angular-leaflet": "latest",
+    "typeahead.js": "latest",
     "jquery": "2"
   },
   "devDependencies": {},
@@ -18,7 +19,6 @@
     "components"
   ],
   "resolutions": {
-    "angular": "1.2.8",
-    "leaflet.markerclusterer": "0.4"
+    "angular": "1.2.8"
   }
 }

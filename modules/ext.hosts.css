@@ -1,31 +1,45 @@
+#HWHostmap {
+    position: relative;
+    clear: both;
+    overflow: hidden;
+    border: 1px solid #cbcbcb;
+}
+
+
+#HWHostmap #hostmap-toolbar {
+    position: absolute;
+    top: 1em;
+    left: 5em;
+    padding: 5px;
+}
+
 #HWHostmap .angular-leaflet-map {
     clear: both;
     height: 500px;
     width: 100%;
+    position: relative;
+    top: 0;
 }
 
-#HWHostmap .sidebar-info {
-    border:1px solid #cbcbcb;
-    height:500px;
-    padding: 10px;
-}
+#HWHostmap .hostmap-sidebar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 485px;
+    width: 18%;
+    padding: 15px 1% 0 1%;
 
-#HWHostmap.adding-marker-false .angular-leaflet-map {
+    box-shadow: -2px -2px 5px rgba(0,0,0, 0.2);
+    -moz-box-shadow: -2px -2px 5px rgba(0,0,0, 0.2);
+    -webkit-box-shadow: -2px -2px 5px rgba(0,0,0, 0.2);
+}
+#HWHostmap .hostmap-sidebar textarea {
     width: 100%;
 }
 
-#HWHostmap.adding-marker-true .angular-leaflet-map {
+#HWHostmap.sidebar-false .angular-leaflet-map {
+    width: 100%;
+}
+#HWHostmap.sidebar-true .angular-leaflet-map {
     width: 80%;
-}
-
-#HWHostmap.adding-marker-true .sidebar-info {
-    width: 20%;
-}
-
-#HWHostmap .col-hostmap {
-    padding: 0px;
-}
-
-#HWHostmap textarea {
-    width:100%;
 }

@@ -1,7 +1,7 @@
 /**
  * JavaScript for Map in Hosts.
  */
-( function ( mw, jQuery, angular ) {
+( function ( mw, $, angular ) {
 
     //var APIPath = wgServer + wgScriptPath;
 
@@ -252,7 +252,7 @@
         }
          $log.log($scope.hostmap);
         $scope.searchaddress = function () {
-            
+
             $http.get('http://nominatim.openstreetmap.org/search?q=' + $scope.address.search.replace(/ /g , '+') + '&format=json&limit=1&email=contact@hitchwiki.org') .success(function(data) {
                 if(data[0]) {
 
@@ -267,7 +267,15 @@
                 }
             });
         }
-                                                                                                                                         
+
     });
+
+    /**
+     * Search suggestions
+     */
+    $("#hostmap-search").typeahead([{
+        name: 'hostmap-suggestions',
+        remote: 'http://nominatim.openstreetmap.org/search?q=%QUERY&format=json&limit=10&email=contact@hitchwiki.org',
+    }]);
 
 }( mediaWiki, jQuery, angular ) );
